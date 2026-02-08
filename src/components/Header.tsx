@@ -23,6 +23,9 @@ export function Header() {
             <Link href="/categories" className="transition-colors hover:text-[var(--fg)]">
               Categories
             </Link>
+            <Link href="/about" className="transition-colors hover:text-[var(--fg)]">
+              About
+            </Link>
           </nav>
         </div>
 
@@ -60,6 +63,9 @@ export function Header() {
           <nav className="flex flex-col gap-3 text-sm">
             <Link href="/categories" onClick={() => setMobileOpen(false)} className="text-[var(--fg-secondary)] hover:text-[var(--fg)]">
               Categories
+            </Link>
+            <Link href="/about" onClick={() => setMobileOpen(false)} className="text-[var(--fg-secondary)] hover:text-[var(--fg)]">
+              About
             </Link>
           </nav>
         </div>

@@ -68,7 +68,7 @@ export default async function HomePage() {
               for your business
             </h1>
             <p className="mt-4 text-lg text-[var(--fg-secondary)]">
-              Compare 621+ tools across {categories.length} categories. Detailed
+              Compare 600+ SaaS tools across {categories.length} categories. Detailed
               features, pricing, and side-by-side comparisons.
             </p>
             <div className="mx-auto mt-8 max-w-lg">

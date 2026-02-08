@@ -3,6 +3,9 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "About - SoftwareScout",
   description: "SoftwareScout is an independent software comparison platform that helps businesses find the right tools.",
+  alternates: {
+    canonical: "/about",
+  },
 };
 
 export default function AboutPage() {

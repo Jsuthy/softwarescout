@@ -13,6 +13,9 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
     description: q
       ? `Search results for "${q}" — SoftwareScout`
       : "Search 621+ software tools",
+    alternates: {
+      canonical: "/search",
+    },
   };
 }
 

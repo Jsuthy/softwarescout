@@ -4,16 +4,26 @@ import type { MetadataRoute } from "next";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://softwarescout.xyz";
 
-  const [{ data: tools }, { data: categories }, { data: comparisons }] =
-    await Promise.all([
-      supabase.from("tools").select("slug"),
-      supabase.from("categories").select("slug"),
-      supabase.from("comparisons").select("tool_a_slug, tool_b_slug"),
-    ]);
+  const [
+    { data: tools },
+    { data: categories },
+    { data: comparisons },
+    { data: industryPages },
+  ] = await Promise.all([
+    supabase.from("tools").select("slug"),
+    supabase.from("categories").select("slug"),
+    supabase.from("comparisons").select("tool_a_slug, tool_b_slug"),
+    supabase
+      .from("industry_pages")
+      .select("software_category, industry"),
+  ]);
 
   const staticPages: MetadataRoute.Sitemap = [
     { url: baseUrl, changeFrequency: "daily", priority: 1 },
     { url: `${baseUrl}/categories`, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${baseUrl}/about`, changeFrequency: "monthly", priority: 0.4 },
+    { url: `${baseUrl}/privacy`, changeFrequency: "monthly", priority: 0.3 },
+    { url: `${baseUrl}/terms`, changeFrequency: "monthly", priority: 0.3 },
     { url: `${baseUrl}/search`, changeFrequency: "weekly", priority: 0.5 },
   ];
 
@@ -41,5 +51,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })
   );
 
-  return [...staticPages, ...categoryPages, ...toolPages, ...comparePages];
+  const industryGuidePages: MetadataRoute.Sitemap = (industryPages || []).map(
+    (p: { software_category: string; industry: string }) => ({
+      url: `${baseUrl}/best/${p.software_category}/for/${p.industry}`,
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })
+  );
+
+  return [
+    ...staticPages,
+    ...categoryPages,
+    ...toolPages,
+    ...comparePages,
+    ...industryGuidePages,
+  ];
 }

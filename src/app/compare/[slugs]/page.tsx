@@ -30,6 +30,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${nameA} vs ${nameB} — Detailed Comparison`,
     description: `Compare ${nameA} and ${nameB} side-by-side. Features, pricing, pros & cons.`,
+    alternates: {
+      canonical: `/compare/${slugs}`,
+    },
   };
 }
 

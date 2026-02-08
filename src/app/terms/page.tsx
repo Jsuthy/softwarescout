@@ -3,6 +3,9 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Terms of Service - SoftwareScout",
   description: "Terms of Service for SoftwareScout, a software comparison platform by The Sutherland Legacy.",
+  alternates: {
+    canonical: "/terms",
+  },
 };
 
 export default function TermsPage() {

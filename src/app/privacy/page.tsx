@@ -3,6 +3,9 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Privacy Policy - SoftwareScout",
   description: "Privacy Policy for SoftwareScout, a software comparison platform by The Sutherland Legacy.",
+  alternates: {
+    canonical: "/privacy",
+  },
 };
 
 export default function PrivacyPage() {

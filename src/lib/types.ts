@@ -65,3 +65,32 @@ export interface Verdict {
 export interface CategoryWithCount extends Category {
   tool_count: number;
 }
+
+export interface IndustryPageRecommendation {
+  tool_slug: string;
+  tool_name: string;
+  why_it_works: string;
+  use_cases: string[];
+  pros: string[];
+  cons: string[];
+  pricing_note: string;
+}
+
+export interface IndustryPageFAQ {
+  question: string;
+  answer: string;
+}
+
+export interface IndustryPage {
+  id: string;
+  slug: string;
+  software_category: string;
+  industry: string;
+  title: string;
+  meta_description: string;
+  intro: string;
+  buying_guide: string;
+  recommendations: IndustryPageRecommendation[];
+  faq: IndustryPageFAQ[];
+  created_at: string;
+}

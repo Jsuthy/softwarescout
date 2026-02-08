@@ -11,12 +11,16 @@ const geist = Geist({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://softwarescout.xyz"),
   title: {
     default: "SoftwareScout — Find & Compare the Best Software Tools",
     template: "%s | SoftwareScout",
   },
   description:
     "Compare 621+ software tools across 29 categories. Find the perfect tool for your business with detailed comparisons, pricing, and reviews.",
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "SoftwareScout — Find & Compare the Best Software Tools",
     description:

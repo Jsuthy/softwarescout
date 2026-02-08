@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   title: "All Categories",
   description:
     "Browse 29 software categories including CRM, project management, design tools, and more.",
+  alternates: {
+    canonical: "/categories",
+  },
 };
 
 async function getCategories() {

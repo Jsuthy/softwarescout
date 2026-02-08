@@ -22,6 +22,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${tool.name} — Pricing, Features & Alternatives`,
     description: tool.description?.slice(0, 160) || `Learn about ${tool.name}`,
+    alternates: {
+      canonical: `/tool/${slug}`,
+    },
     openGraph: {
       title: `${tool.name} — SoftwareScout`,
       description: tool.description?.slice(0, 160),
@@ -43,23 +46,39 @@ async function getToolData(slug: string) {
 
   if (!tool) return null;
 
-  const { data: alternatives } = await supabase
-    .from("tools")
-    .select("*")
-    .eq("category_slug", tool.category_slug)
-    .neq("slug", slug)
-    .limit(4);
+  const [{ data: alternatives }, { data: category }, { data: comparisonsA }, { data: comparisonsB }] =
+    await Promise.all([
+      supabase
+        .from("tools")
+        .select("*")
+        .eq("category_slug", tool.category_slug)
+        .neq("slug", slug)
+        .limit(4),
+      supabase
+        .from("categories")
+        .select("name")
+        .eq("slug", tool.category_slug)
+        .single(),
+      supabase
+        .from("comparisons")
+        .select("tool_a_slug, tool_b_slug")
+        .eq("tool_a_slug", slug),
+      supabase
+        .from("comparisons")
+        .select("tool_a_slug, tool_b_slug")
+        .eq("tool_b_slug", slug),
+    ]);
 
-  const { data: category } = await supabase
-    .from("categories")
-    .select("name")
-    .eq("slug", tool.category_slug)
-    .single();
+  const comparisons = [
+    ...(comparisonsA || []),
+    ...(comparisonsB || []),
+  ] as { tool_a_slug: string; tool_b_slug: string }[];
 
   return {
     tool: tool as Tool,
     alternatives: (alternatives || []) as Tool[],
     categoryName: category?.name || tool.category_slug,
+    comparisons,
   };
 }
 
@@ -68,7 +87,7 @@ export default async function ToolPage({ params }: Props) {
   const data = await getToolData(slug);
   if (!data) notFound();
 
-  const { tool, alternatives, categoryName } = data;
+  const { tool, alternatives, categoryName, comparisons } = data;
   const link = tool.affiliate_link || tool.website_url;
 
   const jsonLd = {
@@ -259,6 +278,32 @@ export default async function ToolPage({ params }: Props) {
             </div>
           </div>
         </div>
+
+        {/* Comparisons */}
+        {comparisons.length > 0 && (
+          <section className="mt-16">
+            <h2 className="text-xl font-bold">
+              Compare {tool.name}
+            </h2>
+            <p className="mt-1 text-sm text-[var(--fg-secondary)]">
+              See how {tool.name} stacks up against other tools
+            </p>
+            <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {comparisons.map((comp) => {
+                const otherSlug = comp.tool_a_slug === tool.slug ? comp.tool_b_slug : comp.tool_a_slug;
+                return (
+                  <a
+                    key={`${comp.tool_a_slug}-vs-${comp.tool_b_slug}`}
+                    href={`/compare/${comp.tool_a_slug}-vs-${comp.tool_b_slug}`}
+                    className="rounded-lg border border-[var(--border)] p-4 text-sm font-medium transition-colors hover:bg-[var(--bg-secondary)]"
+                  >
+                    {tool.name} vs {otherSlug}
+                  </a>
+                );
+              })}
+            </div>
+          </section>
+        )}
 
         {/* Alternatives */}
         {alternatives.length > 0 && (

@@ -4,6 +4,7 @@ import { ToolCard } from "@/components/ToolCard";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { CATEGORIES, getIndustryName } from "@/lib/industry-data";
+import { LeadCapture } from "@/components/LeadCapture";
 
 export const revalidate = 3600;
 
@@ -94,6 +95,13 @@ export default async function CategoryPage({ params }: Props) {
           ))}
         </div>
       )}
+
+      {/* Lead Capture */}
+      <LeadCapture
+        softwareCategory={slug}
+        categoryDisplayName={category.name}
+        sourcePage={`/category/${slug}`}
+      />
 
       {/* Industry Guides */}
       {industryGuides.length > 0 && (

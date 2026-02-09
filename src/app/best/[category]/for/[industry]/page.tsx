@@ -10,6 +10,7 @@ import {
   getCategoryName,
   getIndustryName,
 } from "@/lib/industry-data";
+import { LeadCapture } from "@/components/LeadCapture";
 
 export const revalidate = 3600;
 
@@ -378,6 +379,15 @@ export default async function IndustryPageRoute({ params }: Props) {
             </div>
           </section>
         )}
+
+        {/* Lead Capture */}
+        <LeadCapture
+          softwareCategory={CATEGORIES.find((c) => c.slug === category)?.dbCategorySlug || category}
+          categoryDisplayName={categoryName}
+          industry={industry}
+          industryDisplayName={industryName}
+          sourcePage={`/best/${category}/for/${industry}`}
+        />
 
         {/* FAQ Section */}
         {page.faq.length > 0 && (

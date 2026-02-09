@@ -1,6 +1,7 @@
 import { supabase } from "@/lib/supabase";
 import type { Tool, Comparison } from "@/lib/types";
 import { ClickButton } from "@/components/ClickButton";
+import { LeadCapture } from "@/components/LeadCapture";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
@@ -242,6 +243,12 @@ export default async function ComparePage({ params }: Props) {
             )}
           </section>
         )}
+
+        {/* Lead Capture */}
+        <LeadCapture
+          softwareCategory={toolA.category_slug}
+          sourcePage={`/compare/${slugs}`}
+        />
 
         {/* Pros & Cons side by side */}
         {(toolA.pros || toolB.pros) && (

@@ -94,3 +94,20 @@ export interface IndustryPage {
   faq: IndustryPageFAQ[];
   created_at: string;
 }
+
+export interface Lead {
+  id: string;
+  company_name: string | null;
+  industry: string | null;
+  company_size: string | null;
+  budget: string | null;
+  requirements: string[];
+  software_category: string;
+  matched_tools: { slug: string; name: string; score: number }[];
+  name: string;
+  email: string;
+  phone: string | null;
+  source_page: string | null;
+  status: string;
+  created_at: string;
+}

@@ -1,11 +1,19 @@
-import { baseUrl, buildSitemapIndexXml, xmlResponse } from "@/lib/sitemap-utils";
+import {
+  baseUrl,
+  buildSitemapIndexXml,
+  xmlResponse,
+} from "@/lib/sitemap-utils";
+
+export const dynamic = "force-dynamic";
 
 export async function GET() {
+  const lastmod = new Date().toISOString().split("T")[0];
+
   const xml = buildSitemapIndexXml([
-    `${baseUrl}/sitemap-main.xml`,
-    `${baseUrl}/sitemap-tools.xml`,
-    `${baseUrl}/sitemap-comparisons.xml`,
-    `${baseUrl}/sitemap-industry.xml`,
+    { loc: `${baseUrl}/sitemap-main.xml`, lastmod },
+    { loc: `${baseUrl}/sitemap-tools.xml`, lastmod },
+    { loc: `${baseUrl}/sitemap-comparisons.xml`, lastmod },
+    { loc: `${baseUrl}/sitemap-industry.xml`, lastmod },
   ]);
 
   return xmlResponse(xml);

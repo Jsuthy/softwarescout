@@ -4,14 +4,26 @@ interface SitemapUrl {
   loc: string;
   changefreq: string;
   priority: number;
+  lastmod?: string;
+}
+
+function escapeXml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
 }
 
 export function buildUrlsetXml(urls: SitemapUrl[]): string {
   const entries = urls
-    .map(
-      (u) =>
-        `<url><loc>${u.loc}</loc><changefreq>${u.changefreq}</changefreq><priority>${u.priority}</priority></url>`
-    )
+    .map((u) => {
+      const lastmod = u.lastmod
+        ? `<lastmod>${u.lastmod}</lastmod>`
+        : "";
+      return `<url><loc>${escapeXml(u.loc)}</loc>${lastmod}<changefreq>${u.changefreq}</changefreq><priority>${u.priority}</priority></url>`;
+    })
     .join("\n");
 
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -20,11 +32,13 @@ ${entries}
 </urlset>`;
 }
 
-export function buildSitemapIndexXml(sitemaps: string[]): string {
+export function buildSitemapIndexXml(
+  sitemaps: { loc: string; lastmod: string }[]
+): string {
   const entries = sitemaps
     .map(
-      (url) =>
-        `<sitemap><loc>${url}</loc></sitemap>`
+      (s) =>
+        `<sitemap><loc>${escapeXml(s.loc)}</loc><lastmod>${s.lastmod}</lastmod></sitemap>`
     )
     .join("\n");
 

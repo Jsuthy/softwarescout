@@ -35,6 +35,16 @@ export const CATEGORIES: CategoryDef[] = [
   { slug: "password-managers", name: "Password Managers", dbCategorySlug: "password-managers" },
   { slug: "form-builders", name: "Form Builders", dbCategorySlug: "form-builders" },
   { slug: "nocode-tools", name: "No-Code Tools", dbCategorySlug: "nocode-tools" },
+  { slug: "ai-writing", name: "AI Writing Tools", dbCategorySlug: "ai-writing" },
+  { slug: "ai-image", name: "AI Image Generation", dbCategorySlug: "ai-image" },
+  { slug: "ai-code", name: "AI Code Assistants", dbCategorySlug: "ai-code" },
+  { slug: "ai-marketing", name: "AI Marketing Tools", dbCategorySlug: "ai-marketing" },
+  { slug: "ai-video", name: "AI Video Tools", dbCategorySlug: "ai-video" },
+  { slug: "ai-voice", name: "AI Voice & Audio", dbCategorySlug: "ai-voice" },
+  { slug: "ai-chatbots", name: "AI Chatbots & Assistants", dbCategorySlug: "ai-chatbots" },
+  { slug: "ai-data", name: "AI Data & Analytics", dbCategorySlug: "ai-data" },
+  { slug: "ai-customer-service", name: "AI Customer Service", dbCategorySlug: "ai-customer-service" },
+  { slug: "ai-productivity", name: "AI Productivity Tools", dbCategorySlug: "ai-productivity" },
 ];
 
 export const INDUSTRIES: IndustryDef[] = [

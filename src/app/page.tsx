@@ -68,6 +68,9 @@ export default async function HomePage() {
               for your business
             </h1>
             <p className="mt-4 text-lg text-[var(--fg-secondary)]">
+              Impact-Site-Verification: 743857af-c3c4-493d-8d50-277f8b5171eb
+            </p>
+            <p className="mt-4 text-lg text-[var(--fg-secondary)]">
               Compare 600+ SaaS tools across {categories.length} categories. Detailed
               features, pricing, and side-by-side comparisons.
             </p>
